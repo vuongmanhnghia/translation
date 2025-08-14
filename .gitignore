@@ -1,0 +1,5 @@
+.env
+*/.env
+
+server/configs/local.yaml
+server/configs/production.yaml

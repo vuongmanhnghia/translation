@@ -1,0 +1,25 @@
+services:      
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: translation-server
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=UTC
+      - DEEPL_API_KEY=${DEEPL_API_KEY}
+      - GIN_MODE=debug  # để xem logs chi tiết
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: translation-web
+    restart: unless-stopped
+    ports:
+      - 80:80
+    depends_on:
+      - server
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
